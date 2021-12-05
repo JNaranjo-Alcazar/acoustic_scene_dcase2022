@@ -54,4 +54,20 @@ Project Organization
 
 --------
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+# Run this project on Docker
+
+Create an image:
+
+```bash
+(sudo) docker build -t asc:1.0 .
+```
+
+Run a container:
+
+```bash
+(sudo) docker run -it -v [path/to/repo]:audio_asc bash
+``` 
+
+# Project structure
+
+<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a></small></p>
