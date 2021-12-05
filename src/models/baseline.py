@@ -1,3 +1,7 @@
+'''
+Baseline network
+'''
+
 from tensorflow.keras.layers import (Conv2D, MaxPool2D, Dropout, Input, BatchNormalization,
                                     GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU)
 from tensorflow.keras.models import Model
