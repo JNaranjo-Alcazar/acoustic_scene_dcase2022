@@ -1,0 +1,6 @@
+type: 'baseline'
+filters: [32, 64, 128]
+kernel: 3
+pool: [2, 2, 2]
+dropout: [0.3, 0.3, 0.3]
+global_pool: 'avg'
