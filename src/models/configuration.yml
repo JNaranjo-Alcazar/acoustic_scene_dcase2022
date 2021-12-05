@@ -4,3 +4,4 @@ kernel: 3
 pool: [2, 2, 2]
 dropout: [0.3, 0.3, 0.3]
 global_pool: 'avg'
+augmented_conv: false
