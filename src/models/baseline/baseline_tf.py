@@ -6,9 +6,29 @@ from tensorflow.keras.layers import (Conv2D, MaxPool2D, Dropout, Input, BatchNor
                                     GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU)
 from tensorflow.keras.models import Model
 
-def baseline_model(input_shape, filters, kernel_size, pool_size, dropout, global_pol, n_classes, verbose):
+def construct_baseline_model(include_classification=True, nclasses=10, **parameters)
 
-    inp = Input(shape=input_shape)
+ filters, kernel_size, pool_size, dropout, global_pol,  verbose):
+
+
+audio_network_settings = {
+        'kernel_size': 3,
+
+
+
+
+
+        'verbose': True
+    }
+
+    spectrogram_dim = parameters['spectrogram_dim']
+    filters = parameters['nfilters']
+    top_flatten = parameters['top_flatten']
+    dropout = parameters['dropout']
+    pooling = parameters['pooling']ç
+    kernel_size  = parameters['kernel_size']
+
+    inp = Input(shape=spectrogram_dim)
 
     for i in range(0, len(filters)):
         if i == 0:
@@ -19,12 +39,12 @@ def baseline_model(input_shape, filters, kernel_size, pool_size, dropout, global
         x = BatchNormalization()(x)
         x = ELU()(x)
  
-        x = MaxPool2D(pool_size=pool_size[i])(x)
+        x = MaxPool2D(pool_size=pooling[i])(x)
         x = Dropout(rate=dropout[i])(x)
 
-    if global_pol == 'avg':
+    if top_flatten == 'avg':
          x = GlobalAveragePooling2D()(x)
-    elif global_pol == 'max':
+    elif top_flatten == 'max':
          x = GlobalMaxPooling2D()(x)
 
     x = Dense(units=n_classes, activation='softmax', name='pred_layer')(x)
@@ -35,3 +55,21 @@ def baseline_model(input_shape, filters, kernel_size, pool_size, dropout, global
         print(model.summary())
 
     return model
+
+
+if __name__ == '__main__':
+
+    audio_network_settings = {
+        'kernel_size': 3,
+        'nfilters': (40, 40),
+        'pooling': [(1, 10), (1, 10)],
+        'dropout': [0.3, 0.3],
+        'top_flatten': 'avg',
+        'ratio': 2,
+        'pre_act': False,
+        'spectrogram_dim': (64, 500, 3),
+        'verbose': True
+    }
+
+    audio_model = construct_baseline_model(include_classification=True, **audio_network_settings)
+
