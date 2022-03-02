@@ -1,3 +1,0 @@
-'''
-Conv-mixer implementation
-'''
