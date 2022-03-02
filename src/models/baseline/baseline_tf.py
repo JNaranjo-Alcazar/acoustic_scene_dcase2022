@@ -52,7 +52,7 @@ if __name__ == '__main__':
         'nfilters': (40, 40),
         'pooling': [(1, 10), (1, 10)],
         'dropout': [0.3, 0.3],
-        'top_flatten': 'avg',s
+        'top_flatten': 'avg',
         'spectrogram_dim': (64, 500, 3),
         'verbose': True
     }
