@@ -8,25 +8,13 @@ from tensorflow.keras.models import Model
 
 def construct_baseline_model(include_classification=True, nclasses=10, **parameters)
 
- filters, kernel_size, pool_size, dropout, global_pol,  verbose):
-
-
-audio_network_settings = {
-        'kernel_size': 3,
-
-
-
-
-
-        'verbose': True
-    }
-
     spectrogram_dim = parameters['spectrogram_dim']
     filters = parameters['nfilters']
     top_flatten = parameters['top_flatten']
     dropout = parameters['dropout']
     pooling = parameters['pooling']ç
     kernel_size  = parameters['kernel_size']
+    verbose = parameters['verbose']
 
     inp = Input(shape=spectrogram_dim)
 
@@ -64,9 +52,7 @@ if __name__ == '__main__':
         'nfilters': (40, 40),
         'pooling': [(1, 10), (1, 10)],
         'dropout': [0.3, 0.3],
-        'top_flatten': 'avg',
-        'ratio': 2,
-        'pre_act': False,
+        'top_flatten': 'avg',s
         'spectrogram_dim': (64, 500, 3),
         'verbose': True
     }
