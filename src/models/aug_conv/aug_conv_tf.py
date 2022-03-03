@@ -6,7 +6,7 @@ from tensorflow.keras.layers import (MaxPool2D, Dropout, Input, BatchNormalizati
                                     GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU)
 from tensorflow.keras.models import Model
 
-from attn_augconv import augmented_conv2d
+from attn_augconv_tf import augmented_conv2d
 
 def construct_aug_conv_model(include_classification=True, nclasses=10, **parameters)
 
