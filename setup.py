@@ -5,6 +5,6 @@ setup(
     packages=find_packages(),
     version='0.1.0',
     description='Code related to Acoustic Scene Classification task for DCASE 2022 edition',
-    author='JNaranjo-Alcazar',
+    author='JNaranjo-Alcazar & Josep Zaragoza',
     license='MIT',
 )
