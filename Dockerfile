@@ -1,7 +1,9 @@
-FROM python:3.7
+FROM nvcr.io/nvidia/tensorflow:22.02-tf2-py3
 
-WORKDIR /audio_asc
+WORKDIR /app
 
 COPY requirements.txt .
 
-RUN python3.7 -m pip install -r requirements.txt
+RUN  git clone https://github.com/google-research/leaf-audio.git
+RUN cd leaf-audio && pip3 install -e .
+
