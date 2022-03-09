@@ -6,13 +6,13 @@ from tensorflow.keras.layers import (Conv2D, MaxPool2D, Dropout, Input, BatchNor
                                     GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU)
 from tensorflow.keras.models import Model
 
-def construct_baseline_model(include_classification=True, nclasses=10, **parameters)
+def construct_baseline_model(include_classification=True, nclasses=10, **parameters):
 
     spectrogram_dim = parameters['spectrogram_dim']
     filters = parameters['nfilters']
     top_flatten = parameters['top_flatten']
     dropout = parameters['dropout']
-    pooling = parameters['pooling']ç
+    pooling = parameters['pooling']
     kernel_size  = parameters['kernel_size']
     verbose = parameters['verbose']
 
@@ -35,7 +35,7 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
     elif top_flatten == 'max':
          x = GlobalMaxPooling2D()(x)
 
-    x = Dense(units=n_classes, activation='softmax', name='pred_layer')(x)
+    x = Dense(units=nclasses, activation='softmax', name='pred_layer')(x)
 
     model = Model(inputs=inp, outputs=x)
 
