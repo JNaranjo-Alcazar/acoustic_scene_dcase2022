@@ -41,8 +41,10 @@ def construct_convmixer_model(include_classification=True, nclasses=10, **parame
 
     kernel_size = parameters['kernel_size']
     spectrogram_dim = parameters['spectrogram_dim']
-    filters = parameters['filters']
+    filters = parameters['nfilters']
     top_flatten = parameters['top_flatten']
+    dropout = parameters['dropout']
+    pooling = parameters['pooling']
     verbose = parameters['verbose']
     patch_size = parameters['patch_size']
 
@@ -50,11 +52,13 @@ def construct_convmixer_model(include_classification=True, nclasses=10, **parame
     #x = layers.Rescaling(scale=1.0 / 255)(inputs)
 
     # Extract patch embeddings.
-    x = conv_stem(x, filters[0], patch_size)
+    x = conv_stem(inputs, filters[0], patch_size)
 
     # ConvMixer blocks.
-    for _ in range(len(filters)):
-        x = conv_mixer_block(x, filters, kernel_size)
+    for i, nfilter in enumerate (filters):
+        x = conv_mixer_block(x, nfilter, kernel_size)
+        x = layers.MaxPool2D(pool_size=pooling[i])(x)
+        x = layers.Dropout(rate=dropout[i])(x)
 
     # Classification block.
     if top_flatten == 'avg':
@@ -62,24 +66,28 @@ def construct_convmixer_model(include_classification=True, nclasses=10, **parame
     elif top_flatten == 'max':
          x = layers.GlobalMaxPooling2D()(x)
     #x = layers.GlobalAvgPool2D()(x)
-    outputs = layers.Dense(num_classes, activation="softmax")(x)
+
+    if include_classification:
+        outputs = layers.Dense(nclasses, activation="softmax")(x)
+
+    model = keras.Model(inputs, outputs)
 
     if verbose:
         print(model.summary())
 
-    return keras.Model(inputs, outputs)
+    return model
 
 if __name__ == '__main__':
 
-	audio_network_settings = {
+    audio_network_settings = {
         'kernel_size': 3,
         'nfilters': (40, 40),
-        'patch_size': 2,
-        #'pooling': [(1, 10), (1, 10)],
-        #'dropout': [0.3, 0.3],
+        'pooling': [(1, 10), (1, 10)],
+        'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
+        'patch_size': 2,
         'spectrogram_dim': (64, 500, 3),
         'verbose': True
     }
 
-    audio_model = construct_baseline_model(include_classification=True, **audio_network_settings)
+    construct_convmixer_model(include_classification=True, nclasses=10, **audio_network_settings)
