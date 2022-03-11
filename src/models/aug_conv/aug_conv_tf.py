@@ -43,9 +43,6 @@ def construct_aug_conv_model(include_classification=True, nclasses=10, **paramet
     model = Model(inputs=inp, outputs=x)
 
     if verbose:
-        model = Model(inputs=inp, outputs=x)
-
-    if verbose:
         print(model.summary())
 
     return model
