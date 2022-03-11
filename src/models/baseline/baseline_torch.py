@@ -34,15 +34,15 @@ class Baseline(Module):
                                         stride=1, padding=1))
 
             self.conv_layers.append(BatchNorm2d(nfilter))
-            self.conv_layers.append(ELU(inplace=True))
+            self.conv_layers.append(ELU(inplace=False))
 
             self.conv_layers.append(Conv2d(nfilter, nfilter, kernel_size=self.kernel_size, 
                                         stride=1, padding=1))
             self.conv_layers.append(BatchNorm2d(nfilter))
-            self.conv_layers.append(ELU(inplace=True))
+            self.conv_layers.append(ELU(inplace=False))
 
             self.conv_layers.append(MaxPool2d(kernel_size=self.pooling[idx], stride=self.pooling[idx]))
-            self.conv_layers.append(Dropout(p=self.dropout[idx], inplace=True))
+            self.conv_layers.append(Dropout(p=self.dropout[idx], inplace=False))
 
         self.classifier = Linear(nfilter, nclasses)
 
