@@ -208,7 +208,7 @@ if __name__ == '__main__':
 	    'top_flatten': 'avg',
 	    'ratio': 2,
 	    'pre_act': False,
-	    'spectrogram_dim': (64, 500, 3),
+	    'spectrogram_dim': (64, 500, 1),
         'merge_type': 'max',
 	    'verbose': True
 	}

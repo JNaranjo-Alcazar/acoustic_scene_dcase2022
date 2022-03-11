@@ -27,6 +27,10 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
         x = BatchNormalization()(x)
         x = ELU()(x)
  
+        x = Conv2D(filters[i], kernel_size, padding='same')(x)
+        x = BatchNormalization()(x)
+        x = ELU()(x)
+
         x = MaxPool2D(pool_size=pooling[i])(x)
         x = Dropout(rate=dropout[i])(x)
 
