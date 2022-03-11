@@ -126,6 +126,7 @@ class AttentionAugmentation2D(Layer):
             self.key_relative_w = None
             self.key_relative_h = None
 
+    @tf.function
     def call(self, inputs, **kwargs):
         if self.axis == 1:
             # If channels first, force it to be channels last for these ops

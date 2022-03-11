@@ -8,7 +8,7 @@ from tensorflow.keras.models import Model
 
 from attn_augconv_tf import augmented_conv2d
 
-def construct_aug_conv_model(include_classification=True, nclasses=10, **parameters)
+def construct_aug_conv_model(include_classification=True, nclasses=10, **parameters):
 
     spectrogram_dim = parameters['spectrogram_dim']
     filters = parameters['nfilters']
@@ -37,9 +37,13 @@ def construct_aug_conv_model(include_classification=True, nclasses=10, **paramet
     elif top_flatten == 'max':
          x = GlobalMaxPooling2D()(x)
 
-    x = Dense(units=n_classes, activation='softmax', name='pred_layer')(x)
+    if include_classification:
+        x = Dense(units=nclasses, activation='softmax', name='pred_layer')(x)
 
     model = Model(inputs=inp, outputs=x)
+
+    if verbose:
+        model = Model(inputs=inp, outputs=x)
 
     if verbose:
         print(model.summary())
