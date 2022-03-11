@@ -2,10 +2,10 @@
 absl-py>=0.10.0
 gin-config>=0.4.0
 pydub>=0.24.0
-#lingvo>=0.9.0
+lingvo>=0.9.0
 numpy>=1.18.2
-tensorflow==2.5.1
-tensorflow-gpu==2.5.1
+tensorflow>=2.5.1
+tensorflow-gpu>=2.5.1
 tensorflow-addons>=0.12.0
 tensorflow-datasets>=4.2.0
 

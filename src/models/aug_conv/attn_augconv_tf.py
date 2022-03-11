@@ -1,7 +1,3 @@
-'''
-From https://github.com/titu1994/keras-attention-augmented-convs/blob/master/attn_augconv.py
-'''
-
 import tensorflow as tf
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.layers import Conv2D
@@ -94,7 +90,9 @@ class AttentionAugmentation2D(Layer):
 
         self.axis = 1 if K.image_data_format() == 'channels_first' else -1
 
+    @tf.function
     def build(self, input_shape):
+        
         self._shape = input_shape
 
         # normalize the format of depth_v and depth_k
@@ -126,7 +124,6 @@ class AttentionAugmentation2D(Layer):
             self.key_relative_w = None
             self.key_relative_h = None
 
-    @tf.function
     def call(self, inputs, **kwargs):
         if self.axis == 1:
             # If channels first, force it to be channels last for these ops
