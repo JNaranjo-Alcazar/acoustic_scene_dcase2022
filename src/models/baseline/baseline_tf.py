@@ -55,7 +55,7 @@ if __name__ == '__main__':
         'pooling': [(1, 10), (1, 10)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
-        'spectrogram_dim': (64, 500, 3),
+        'spectrogram_dim': (64, 500, 1),
         'verbose': True
     }
 
