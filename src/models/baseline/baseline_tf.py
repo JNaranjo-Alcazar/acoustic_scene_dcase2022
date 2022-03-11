@@ -35,7 +35,9 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
     elif top_flatten == 'max':
          x = GlobalMaxPooling2D()(x)
 
-    x = Dense(units=nclasses, activation='softmax', name='pred_layer')(x)
+    if include_classification:
+
+        x = Dense(units=nclasses, activation='softmax', name='pred_layer')(x)
 
     model = Model(inputs=inp, outputs=x)
 
