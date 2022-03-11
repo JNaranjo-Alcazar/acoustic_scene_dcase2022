@@ -90,7 +90,6 @@ class AttentionAugmentation2D(Layer):
 
         self.axis = 1 if K.image_data_format() == 'channels_first' else -1
 
-    @tf.function
     def build(self, input_shape):
         
         self._shape = input_shape
