@@ -20,11 +20,12 @@ def construct_aug_conv_model(include_classification=True, nclasses=10, **paramet
 
     inp = Input(shape=spectrogram_dim)
 
+    # TODO: check hyperparameters
     for i in range(0, len(filters)):
         if i == 0:
-            x = augmented_conv2d(inp, filters[i], kernel_size)
+            x = augmented_conv2d(inp, filters[i], kernel_size, num_heads=int(0.2*filters[i]))
         else:
-            x = augmented_conv2d(x, filters[i], kernel_size)
+            x = augmented_conv2d(x, filters[i], kernel_size, num_heads=int(0.2*filters[i]))
         
         x = BatchNormalization()(x)
         x = ELU()(x)

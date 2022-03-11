@@ -232,10 +232,10 @@ class AttentionAugmentation2D(Layer):
         shape = K.shape(x)
         shape = [shape[i] for i in range(3)]
         B, Nh, L, = shape
-        col_pad = K.zeros(K.stack([B, Nh, L, 1]))
+        col_pad = tf.zeros(tf.stack([B, Nh, L, 1]))
         x = K.concatenate([x, col_pad], axis=3)
         flat_x = K.reshape(x, [B, Nh, L * 2 * L])
-        flat_pad = K.zeros(K.stack([B, Nh, L - 1]))
+        flat_pad = tf.zeros(tf.stack([B, Nh, L - 1]))
         flat_x_padded = K.concatenate([flat_x, flat_pad], axis=2)
         final_x = K.reshape(flat_x_padded, [B, Nh, L + 1, 2 * L - 1])
         final_x = final_x[:, :, :L, L - 1:]
