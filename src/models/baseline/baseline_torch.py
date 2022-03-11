@@ -2,12 +2,11 @@
 Implement baseline but in Torch
 '''
 
-from turtle import forward
+
 import torch
-from torch.autograd import Variable
-from torch.nn import (Linear, ReLU, ELU, CrossEntropyLoss, 
-                    Sequential, Conv2d, MaxPool2d, Module, ModuleList, 
-                    Softmax, BatchNorm2d, Dropout)
+from torch.nn import (Linear, ReLU, ELU, 
+                     Conv2d, MaxPool2d, Module, ModuleList, 
+                     BatchNorm2d, Dropout)
 import torch.nn.functional as F
 
 from torchsummary import summary
