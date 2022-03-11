@@ -4,7 +4,7 @@ Squeeze-Excitation model
 
 from tensorflow.keras.layers import (Conv2D, Dense, Permute, GlobalAveragePooling2D, GlobalMaxPooling2D,
                                     Reshape, BatchNormalization, ELU, Lambda, Input, MaxPooling2D, Activation,
-                                    Dropout, add, multiply)
+                                    Dropout, add, multiply, Maximum)
 import tensorflow.keras.backend as k
 from tensorflow.keras.models import Model
 import tensorflow as tf
@@ -29,14 +29,15 @@ def construct_asc_network_csse(include_classification=True, nclasses=10, **param
     pre_act = parameters['pre_act']
     spectrogram_dim = parameters['spectrogram_dim']
     verbose = parameters['verbose']
+    merge_type = parameters['merge_type']
  
     inp = Input(shape=spectrogram_dim)
  
     for i in range(0, len(nfilters)):
         if i == 0:
-            x = conv_standard_post(inp, kernel_size, nfilters[i], ratio, pre_act=pre_act)
+            x = conv_standard_post(inp, kernel_size, nfilters[i], ratio, merge_type, pre_act=pre_act)
         else:
-            x = conv_standard_post(x, kernel_size, nfilters[i], ratio, pre_act=pre_act)
+            x = conv_standard_post(x, kernel_size, nfilters[i], ratio, merge_type, pre_act=pre_act)
  
         x = MaxPooling2D(pool_size=pooling[i])(x)
         x = Dropout(rate=dropout[i])(x)
@@ -57,7 +58,7 @@ def construct_asc_network_csse(include_classification=True, nclasses=10, **param
     return model
  
  
-def conv_standard_post(inp, kernel_size, nfilters, ratio, pre_act=False):
+def conv_standard_post(inp, kernel_size, nfilters, ratio, merge_type, pre_act=False):
     """
     Block presented in (https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9118879)
     Args:
@@ -95,14 +96,14 @@ def conv_standard_post(inp, kernel_size, nfilters, ratio, pre_act=False):
  
     x = ELU()(x)
     
-    x = channel_spatial_squeeze_excite(x, ratio=ratio)
+    x = channel_spatial_squeeze_excite(x, merge_type=merge_type, ratio=ratio)
  
     x = module_addition(x, x1)
  
     return x
  
  
-def channel_spatial_squeeze_excite(input_tensor, ratio=16):
+def channel_spatial_squeeze_excite(input_tensor, merge_type='sum', ratio=16):
     """ Create a spatial squeeze-excite block
     Args:
         input_tensor: input Keras tensor
@@ -116,8 +117,11 @@ def channel_spatial_squeeze_excite(input_tensor, ratio=16):
  
     cse = squeeze_excite_block(input_tensor, ratio)
     sse = spatial_squeeze_excite_block(input_tensor)
- 
-    x = add([cse, sse])
+    
+    if merge_type == 'sum':
+        x = add([cse, sse])
+    elif merge_type == 'max':
+        x = Maximum()([cse, sse])
     return x
  
  
@@ -205,6 +209,7 @@ if __name__ == '__main__':
 	    'ratio': 2,
 	    'pre_act': False,
 	    'spectrogram_dim': (64, 500, 3),
+        'merge_type': 'max',
 	    'verbose': True
 	}
 
