@@ -1,5 +1,6 @@
 '''
 Squeeze-Excitation model
+https://ieeexplore.ieee.org/abstract/document/9118879
 '''
 
 from tensorflow.keras.layers import (Conv2D, Dense, Permute, GlobalAveragePooling2D, GlobalMaxPooling2D,

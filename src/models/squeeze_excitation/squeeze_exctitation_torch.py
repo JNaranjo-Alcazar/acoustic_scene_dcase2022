@@ -1,5 +1,6 @@
 '''
 Squeeze-Excitation model
+https://ieeexplore.ieee.org/abstract/document/9118879
 '''
 
 import torch
