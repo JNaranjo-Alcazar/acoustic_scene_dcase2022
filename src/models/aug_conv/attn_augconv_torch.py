@@ -1,9 +1,13 @@
+'''
+From https://github.com/leaderj1001/Attention-Augmented-Conv2d/blob/master/attention_augmented_conv.py
+'''
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-use_cuda = torch.cuda.is_available()
-device = torch.device("cuda" if use_cuda else "cpu")
+#use_cuda = torch.cuda.is_available()
+#device = torch.device("cuda" if use_cuda else "cpu")
 
 
 class AugmentedConv(nn.Module):
