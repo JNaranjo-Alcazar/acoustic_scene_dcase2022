@@ -1,3 +1,7 @@
+'''
+From https://github.com/titu1994/keras-attention-augmented-convs
+'''
+
 import tensorflow as tf
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.layers import Conv2D
