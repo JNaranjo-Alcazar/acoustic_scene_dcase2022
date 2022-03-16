@@ -1,6 +1,5 @@
 '''
-Implement baseline with trainable CQT in Torch
-https://colab.research.google.com/drive/1coH54dfjAOxEyOjJrqscQRyC0_lmF04s#scrollTo=VDPrMNnoyQX_
+Implement baseline with trainable Gammatone in Torch
 '''
 
 
