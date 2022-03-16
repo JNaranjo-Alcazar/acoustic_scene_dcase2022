@@ -6,12 +6,16 @@ Implement baseline but in Torch
 import torch
 from torch.nn import (Linear, ReLU, ELU, 
                      Conv2d, MaxPool2d, Module, ModuleList, 
-                     BatchNorm2d, Dropout)
+                     BatchNorm2d, Dropout, CrossEntropyLoss)
 import torch.nn.functional as F
+from torch.optim import Adam
+
+import pytorch_lightning as pl
 
 from torchsummary import summary
 
-class Baseline(Module):
+#class Baseline(Module):
+class Baseline(pl.LightningModule):
     def __init__(self, nclasses, **audio_network_settings):
         super(Baseline, self).__init__()
 
@@ -21,6 +25,8 @@ class Baseline(Module):
         self.kernel_size  = audio_network_settings['kernel_size']
         self.verbose = audio_network_settings['verbose']
         self.top_flatten = audio_network_settings['top_flatten']
+        
+        self.loss = CrossEntropyLoss()
         
         self.conv_layers = ModuleList()
 
@@ -54,7 +60,19 @@ class Baseline(Module):
         out = F.softmax(self.classifier(x))
 
         return out
+    
+    def configure_optimizers(self):
+        optimizer = Adam(self.parameters(), lr=1e-2)
+        return optimizer
 
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        # forward, logits
+        logits = self(x)
+        J = self.loss(logits, y)
+        
+        #return {'loss': J}
+        return J
 
 if __name__ == '__main__':
 
