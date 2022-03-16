@@ -10,3 +10,5 @@ RUN cd leaf-audio && pip3 install -e .
 RUN pip3 install lambda-networks
 
 RUN pip3 install torch-summary
+
+RUN pip3 install nnAudio==0.3.1
