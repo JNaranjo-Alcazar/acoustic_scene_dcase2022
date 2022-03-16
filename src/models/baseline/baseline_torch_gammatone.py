@@ -74,7 +74,7 @@ if __name__ == '__main__':
     audio_network_settings = {
         'kernel_size': 3,
         'nfilters': (40, 40),
-        'pooling': [(1, 10), (1, 10)],
+        'pooling': [(1, 2), (1, 2)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
         #'spectrogram_dim': (64, 500, 1),
@@ -85,4 +85,4 @@ if __name__ == '__main__':
 
     print(model)
     #x = model.forward(torch.zeros(1, 441000))
-    summary(model, (1, 441000))
+    summary(model, (1, 44100))
