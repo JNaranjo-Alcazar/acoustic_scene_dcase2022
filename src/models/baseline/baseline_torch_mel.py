@@ -1,5 +1,6 @@
 '''
-Implement baseline but in Torch
+Implement baseline with trainable Mel in Torch
+https://colab.research.google.com/drive/1UtswBYWhVxDNBRDajWzyplZfMiqENCEF#scrollTo=VDPrMNnoyQX_
 '''
 
 
