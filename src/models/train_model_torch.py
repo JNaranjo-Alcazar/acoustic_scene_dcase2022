@@ -2,10 +2,13 @@
 Script to train model
 '''
 
+from gc import callbacks
 import numpy as np
 import torch
 
 import pytorch_lightning as pl
+from pytorch_lightning.loggers import CSVLogger
+from pytorch_lightning.callbacks import LearningRateMonitor
 from torchsummary import summary
 
 from baseline.baseline_torch_gammatone import Baseline
@@ -37,8 +40,11 @@ audio_network_settings = {
 model = Baseline(10, **audio_network_settings)
 summary(model, (1, 44100))
 
+logger = CSVLogger("lightning_logs", name="my_exp_name")
+lr_monitor = LearningRateMonitor(logging_interval='epoch')
 # Train
-trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500)
+trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=5, 
+                     logger=logger, callbacks=[lr_monitor])
 #trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500, gpus=1)
 
 X, Y, X_val, Y_val = get_dummy_dataset()

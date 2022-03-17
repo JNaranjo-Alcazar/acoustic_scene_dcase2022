@@ -1,4 +1,5 @@
 FROM nvcr.io/nvidia/tensorflow:22.02-tf2-py3
+#FROM python:3.8
 
 WORKDIR /app
 

@@ -3,6 +3,7 @@ Implement baseline with trainable Gammatone in Torch
 '''
 
 
+from sched import scheduler
 import torch
 from torch.nn import (Linear, ReLU, ELU, 
                      Conv2d, MaxPool2d, Module, ModuleList, 
@@ -75,7 +76,9 @@ class Baseline(pl.LightningModule):
     
     def configure_optimizers(self):
         optimizer = Adam(self.parameters(), lr=1e-2)
-        return optimizer
+        scheduler = {"scheduler": torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.75), 
+                     "monitor": "val_acc_epoch"}
+        return [optimizer], [scheduler]
 
     def training_step(self, batch, batch_idx):
         x, y = batch
@@ -84,11 +87,16 @@ class Baseline(pl.LightningModule):
         acc = accuracy(logits, y)
         J = self.loss(logits, y)
         self.log("accuracy",  acc, prog_bar=True)
-        return {"loss": J}
+        return {"loss": J, "acc": acc}
     
     def validation_step(self, val_batch, batch_idx):
         return self.training_step(val_batch, batch_idx)
 
+    def validation_epoch_end(self, outputs):
+        avg_loss = torch.tensor([x["loss"] for x in outputs]).mean()
+        avg_accuracy = torch.tensor([x["acc"] for x in outputs]).mean()
+        self.log("val_acc_epoch", avg_accuracy, prog_bar=True)
+        return {"val_loss": avg_loss}
 
 
 if __name__ == '__main__':
