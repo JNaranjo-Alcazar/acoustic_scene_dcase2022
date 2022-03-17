@@ -11,6 +11,7 @@ import torch.nn.functional as F
 from torch.optim import Adam
 
 import pytorch_lightning as pl
+from torchmetrics.functional import accuracy
 
 from nnAudio.features import gammatone
 
@@ -80,10 +81,10 @@ class Baseline(pl.LightningModule):
         x, y = batch
         # forward, logits
         logits = self(x)
+        acc = accuracy(logits, y)
         J = self.loss(logits, y)
-        
-        #return {'loss': J}
-        return J
+        self.log("performance", {"acc": acc, "loss": J}, prog_bar=True)
+        return {"loss": J}
     
     def validation_step(self, val_batch, batch_idx):
         return self.training_step(val_batch, batch_idx)

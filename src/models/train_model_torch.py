@@ -38,7 +38,8 @@ model = Baseline(10, **audio_network_settings)
 summary(model, (1, 44100))
 
 # Train
-trainer = pl.Trainer()
+trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500)
+#trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500, gpus=1)
 
 X, Y, X_val, Y_val = get_dummy_dataset()
 train_data = torch.utils.data.TensorDataset(torch.tensor(X), torch.tensor(Y, dtype=torch.long))

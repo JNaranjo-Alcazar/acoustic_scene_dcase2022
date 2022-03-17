@@ -89,4 +89,7 @@ target/
 .mypy_cache/
 
 # Docker file without NVIDIA capabilities
-Dockerfile_cpu 
+Dockerfile_cpu
+
+# torch trainings
+lightning_logs/
