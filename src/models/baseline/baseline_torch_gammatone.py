@@ -83,7 +83,7 @@ class Baseline(pl.LightningModule):
         logits = self(x)
         acc = accuracy(logits, y)
         J = self.loss(logits, y)
-        self.log("performance", {"acc": acc, "loss": J}, prog_bar=True)
+        self.log("accuracy",  acc, prog_bar=True)
         return {"loss": J}
     
     def validation_step(self, val_batch, batch_idx):
