@@ -44,7 +44,7 @@ logger = CSVLogger("lightning_logs", name="my_exp_name")
 lr_monitor = LearningRateMonitor(logging_interval='epoch')
 # Train
 trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=5, 
-                     logger=logger, callbacks=[lr_monitor])
+                     logger=logger, callbacks=[lr_monitor]) #log_every_n_steps=int(n_total_samples/batch_size) 
 #trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500, gpus=1)
 
 X, Y, X_val, Y_val = get_dummy_dataset()
