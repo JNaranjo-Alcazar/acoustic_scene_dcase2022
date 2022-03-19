@@ -15,3 +15,5 @@ RUN pip3 install torch-summary
 RUN pip3 install nnAudio==0.3.1
 
 RUN pip3 install pytorch-lightning==1.5.10
+
+RUN pip3 install pandas
