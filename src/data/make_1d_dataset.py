@@ -13,6 +13,7 @@ from sklearn.preprocessing import LabelEncoder
 
 import torch
 import torchaudio
+import torchaudio.transforms as T
 import pandas as pd
 
 from tqdm import tqdm
@@ -24,6 +25,8 @@ def read_csv(path_to_file):
 
 def create_1d_matrix(filenames, prefix, sample_rate, mode):
     
+    resampler = T.Resample(44100, sample_rate)
+    
     idx = 0
     if mode == 'train':
         X = torch.empty(len(filenames)-1, sample_rate)
@@ -33,6 +36,7 @@ def create_1d_matrix(filenames, prefix, sample_rate, mode):
     for i, filename in tqdm(enumerate(filenames), total=len(filenames)):
         if i != 68276: # problem reading this specific file
             x, sr = torchaudio.load(os.path.join(prefix, filename), normalize=True)
+            x = resampler(x)
             X[idx] = x
             idx += 1
         
@@ -64,13 +68,14 @@ if __name__ == '__main__':
     PREFIX_TO_DATA = ('/app/data/TAU-urban-acoustic-scenes-2022-mobile-development.audio/'
                       'TAU-urban-acoustic-scenes-2022-mobile-development/')
     
-    SAMPLE_RATE = 44100
+    SAMPLE_RATE = 16000
     
     dataframe_train = read_csv(PATH_TO_TRAIN_CSV)
     
     train_files = dataframe_train['filename'].tolist()
     X_train = create_1d_matrix(train_files, PREFIX_TO_DATA, SAMPLE_RATE, mode='train') 
     train_scenes = dataframe_train['scene_label'].tolist()
+    train_scenes.pop(68276)
     label_encoder = create_labeler_encoder(train_scenes)
     Y_train = torch.Tensor(create_1d_labels(train_scenes, label_encoder))
     
