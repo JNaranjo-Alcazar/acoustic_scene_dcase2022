@@ -33,7 +33,7 @@ class Baseline(pl.LightningModule):
         
         self.conv_layers = ModuleList()
         # Adding Mel trainable layer
-        self.conv_layers.append(gammatone.Gammatonegram(sr=44100, n_fft=2048, n_bins=64, hop_length=512, window='hann', 
+        self.conv_layers.append(gammatone.Gammatonegram(sr=16000, n_fft=640, n_bins=64, hop_length=320, window='hann', 
                                                         center=True, pad_mode='reflect', power=2.0, 
                                                         htk=False, fmin=20.0, fmax=None, norm=1, 
                                                         trainable_bins=True, trainable_STFT=True))
@@ -121,4 +121,4 @@ if __name__ == '__main__':
 
     print(model)
     #x = model.forward(torch.zeros(1, 441000))
-    summary(model, (1, 44100))
+    summary(model, (1, 16000))
