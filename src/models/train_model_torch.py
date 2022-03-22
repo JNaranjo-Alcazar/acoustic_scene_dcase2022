@@ -2,6 +2,8 @@
 Script to train model
 '''
 
+import gc
+
 import argparse
 
 import torch
@@ -75,16 +77,24 @@ if __name__ == '__main__':
     X = torch.load(opt.train_features)
     Y = torch.load(opt.train_labels)
     train_data = torch.utils.data.TensorDataset(X, Y)
-    del X, Y
+    del(X)
+    gc.collect()
+    del (Y)
+    gc.collect()
     train_loader = torch.utils.data.DataLoader(train_data, batch_size=32)
-    del train_data
+    del(train_data)
+    gc.collect()
     
     X_val = torch.load(opt.validation_features)
     Y_val = torch.load(opt.validation_labels)
     val_data = torch.utils.data.TensorDataset(X_val, Y_val)
-    del X_val, Y_val
+    del(X_val)
+    gc.collect()
+    del(Y_val)
+    gc.collect()
     val_loader = torch.utils.data.DataLoader(val_data, batch_size=32)
-    del val_data
+    del(val_data)
+    gc.collect()
 
     model = Baseline(10, **audio_network_settings)
     #summary(model, (1, 44100))
