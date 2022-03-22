@@ -92,10 +92,14 @@ if __name__ == '__main__':
     #trainer = pl.Trainer(progress_bar_refresh_rate=20, max_epochs=500, gpus=1)
 
     #X, Y, X_val, Y_val = get_dummy_dataset()
-    train_data = torch.utils.data.TensorDataset(torch.tensor(X), torch.tensor(Y, dtype=torch.long))
-    val_data = torch.utils.data.TensorDataset(torch.tensor(X_val), torch.tensor(Y_val, dtype=torch.long))
+    train_data = torch.utils.data.TensorDataset(X, Y)
+    del X, Y
+    val_data = torch.utils.data.TensorDataset(X_val, Y_val)
+    del X_val, Y_val
     train_loader = torch.utils.data.DataLoader(train_data, batch_size=32)
+    del train_data
     val_loader = torch.utils.data.DataLoader(val_data, batch_size=32)
+    del val_data
 
 
     # Need to prepare acc and on epoch end, pbar -> video
