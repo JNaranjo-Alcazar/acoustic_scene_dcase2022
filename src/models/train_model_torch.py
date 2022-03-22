@@ -74,8 +74,8 @@ if __name__ == '__main__':
     
     X = torch.load(opt.train_features)
     Y = torch.load(opt.train_labels)
-    X_val = torch.load(opt.val_features)
-    Y_val = torch.load(opt.val_labels)
+    X_val = torch.load(opt.validation_features)
+    Y_val = torch.load(opt.validation_labels)
 
     model = Baseline(10, **audio_network_settings)
     #summary(model, (1, 44100))
