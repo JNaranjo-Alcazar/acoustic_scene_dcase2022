@@ -68,8 +68,8 @@ if __name__ == '__main__':
     
     print(f"training features path: {opt.train_features}")
     print(f"training labels path: {opt.train_labels}")
-    print(f"validation features path: {opt.val_features}")
-    print(f"validation labels path: {opt.val_labels}")
+    print(f"validation features path: {opt.validation_features}")
+    print(f"validation labels path: {opt.validation_labels}")
     print(f"Set in colab: {opt.colab}")
     
     X = torch.load(opt.train_features)
