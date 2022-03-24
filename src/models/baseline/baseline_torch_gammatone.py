@@ -3,7 +3,6 @@ Implement baseline with trainable Gammatone in Torch
 '''
 
 
-from sched import scheduler
 import torch
 from torch.nn import (Linear, ReLU, ELU, 
                      Conv2d, MaxPool2d, Module, ModuleList, 

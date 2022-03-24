@@ -76,6 +76,7 @@ if __name__ == '__main__':
     
     X = torch.load(opt.train_features)
     Y = torch.load(opt.train_labels)
+    Y = Y.long()
     train_data = torch.utils.data.TensorDataset(X, Y)
     del(X)
     gc.collect()
@@ -87,6 +88,7 @@ if __name__ == '__main__':
     
     X_val = torch.load(opt.validation_features)
     Y_val = torch.load(opt.validation_labels)
+    Y_val = Y_val.long()
     val_data = torch.utils.data.TensorDataset(X_val, Y_val)
     del(X_val)
     gc.collect()
