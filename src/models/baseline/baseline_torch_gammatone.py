@@ -93,8 +93,8 @@ class Baseline(pl.LightningModule):
     
     def training_epoch_end(self, outputs):
         avg_loss = torch.tensor([x["loss"] for x in outputs]).mean()
-        avg_accuracy = torch.tensor([x["acc"] for x in outputs]).mean()
-        self.log("acc_epoch", avg_accuracy, prog_bar=True)
+        #avg_accuracy = torch.tensor([x["acc"] for x in outputs]).mean()
+        #self.log("acc_epoch", avg_accuracy, prog_bar=True)
         
     
     def validation_step(self, val_batch, batch_idx):
