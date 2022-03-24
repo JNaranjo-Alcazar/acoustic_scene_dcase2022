@@ -102,9 +102,9 @@ class Baseline(pl.LightningModule):
         logits = self(x)
         loss = F.cross_entropy(logits, y)
         a, y_hat = torch.max(logits, dim=1)
-        self.valid_acc(y_hat, y)
+        valid_acc = self.valid_acc(y_hat, y)
         self.log('valid_loss', loss, on_step=True, on_epoch=True)
-        self.log('valid_acc', self.valid_acc, on_step=True, on_epoch=True)
+        self.log('valid_acc', valid_acc, on_step=True, on_epoch=True)
 
     def validation_epoch_end(self, outputs):
         avg_loss = torch.tensor([x["valid_loss"] for x in outputs]).mean()
