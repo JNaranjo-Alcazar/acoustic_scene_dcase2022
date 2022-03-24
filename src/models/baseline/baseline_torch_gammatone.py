@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from torch.optim import Adam
 
 import pytorch_lightning as pl
-from torchmetrics.functional import accuracy
+import torchmetrics
 
 from nnAudio.features import gammatone
 
@@ -28,7 +28,8 @@ class Baseline(pl.LightningModule):
         self.verbose = audio_network_settings['verbose']
         self.top_flatten = audio_network_settings['top_flatten']
         
-        self.loss = CrossEntropyLoss()
+        self.valid_acc = torchmetrics.Accuracy()
+        #self.loss = CrossEntropyLoss()
         
         self.conv_layers = ModuleList()
         # Adding Mel trainable layer
@@ -83,10 +84,12 @@ class Baseline(pl.LightningModule):
         x, y = batch
         # forward, logits
         logits = self(x)
-        acc = accuracy(logits, y)
-        J = self.loss(logits, y)
-        self.log("accuracy",  acc, prog_bar=True)
-        return {"loss": J, "acc": acc}
+        #acc = accuracy(logits, y)
+        J = F.cross_entropy(logits, y)
+        #self.log("accuracy",  acc, prog_bar=True)
+        self.log('loss', J, on_step=True, on_epoch=True)
+        #return {"loss": J, "acc": acc}
+        return J
     
     def training_epoch_end(self, outputs):
         avg_loss = torch.tensor([x["loss"] for x in outputs]).mean()
@@ -95,11 +98,17 @@ class Baseline(pl.LightningModule):
         
     
     def validation_step(self, val_batch, batch_idx):
-        return self.training_step(val_batch, batch_idx)
+        x, y = val_batch
+        logits = self(x)
+        loss = F.cross_entropy(logits, y)
+        a, y_hat = torch.max(logits, dim=1)
+        self.valid_acc(y_hat, y)
+        self.log('valid_loss', loss, on_step=True, on_epoch=True)
+        self.log('valid_acc', self.valid_acc, on_step=True, on_epoch=True)
 
     def validation_epoch_end(self, outputs):
-        avg_loss = torch.tensor([x["loss"] for x in outputs]).mean()
-        avg_accuracy = torch.tensor([x["acc"] for x in outputs]).mean()
+        avg_loss = torch.tensor([x["valid_loss"] for x in outputs]).mean()
+        avg_accuracy = torch.tensor([x["valid_acc"] for x in outputs]).mean()
         self.log("val_acc_epoch", avg_accuracy, prog_bar=True)
         return {"val_loss": avg_loss}
 
