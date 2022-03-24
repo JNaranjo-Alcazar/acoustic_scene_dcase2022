@@ -69,7 +69,7 @@ class Baseline(pl.LightningModule):
             i += 1
         if self.top_flatten == 'avg':
             x = torch.mean(x.view(x.size(0), x.size(1), -1), dim=2)
-        out = F.softmax(self.classifier(x))
+        out = self.classifier(x)
 
         return out
     
