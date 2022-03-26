@@ -36,7 +36,7 @@ class Baseline(pl.LightningModule):
         self.conv_layers.append(gammatone.Gammatonegram(sr=16000, n_fft=640, n_bins=64, hop_length=320, window='hann', 
                                                         center=True, pad_mode='reflect', power=2.0, 
                                                         htk=False, fmin=20.0, fmax=None, norm=1, 
-                                                        trainable_bins=True, trainable_STFT=True))
+                                                        trainable_bins=False, trainable_STFT=False))
 
         for idx, nfilter in enumerate(self.filters):
             if idx == 0:
