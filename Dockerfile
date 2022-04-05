@@ -1,19 +1,21 @@
-FROM nvcr.io/nvidia/tensorflow:22.02-tf2-py3
-#FROM python:3.8
+FROM nvidia/cuda:11.3.0-base 
+FROM tensorflow/tensorflow:latest-gpu
 
+#Copy sources
 WORKDIR /app
+COPY requirement.txt .
 
-COPY requirements.txt .
+# Install pip requirements
+ARG PYTHON=python3.8
+RUN apt-get update -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  \ 
+    libsndfile-dev \
+    ${PYTHON} \
+    ${PYTHON}-dev \
+    ${PYTHON}-distutils \
+    curl \
+    git \
+    build-essential
 
-RUN  git clone https://github.com/google-research/leaf-audio.git
-RUN cd leaf-audio && pip3 install -e .
-
-RUN pip3 install lambda-networks
-
-RUN pip3 install torch-summary
-
-RUN pip3 install nnAudio==0.3.1
-
-RUN pip3 install pytorch-lightning==1.5.10
-
-RUN pip3 install pandas
+# Install python requirement
+RUN pip install -r ./requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
