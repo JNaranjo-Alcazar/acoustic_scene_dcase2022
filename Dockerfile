@@ -3,7 +3,7 @@ FROM tensorflow/tensorflow:latest-gpu
 
 #Copy sources
 WORKDIR /app
-COPY requirement.txt .
+COPY requirements.txt .
 
 # Install pip requirements
 ARG PYTHON=python3.8

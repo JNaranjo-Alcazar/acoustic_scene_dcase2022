@@ -20,5 +20,6 @@ matplotlib
 torch==1.10.1+cu113
 torchaudio
 soundfile
+pandas
 # backwards compatibility
 # pathlib2
