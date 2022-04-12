@@ -17,5 +17,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  \
     git \
     build-essential
 
+    
 # Install python requirement
 RUN pip install -r ./requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
