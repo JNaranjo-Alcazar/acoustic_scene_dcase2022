@@ -2,9 +2,9 @@ audio:
   win_len : 0.04
   hop_len: 0.02
   n_channels : 64
-  sr : 22050
+  sr : 44100
   fmin : 80
   mono : True
   file : "/app/acoustic_scene_dcase2022/LJ001-0001.wav"
-
+  n_fft: 1024
 
