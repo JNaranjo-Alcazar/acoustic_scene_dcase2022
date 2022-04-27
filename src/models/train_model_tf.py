@@ -46,9 +46,10 @@ print(f'Training labels shape: {validation_labels.shape}')
 
 # Callbacks
 
-# LR
-# Reduce
-# EarlyStopping
+# Model Checkpoint -> https://keras.io/api/callbacks/model_checkpoint/
+# CSV logger -> https://keras.io/api/callbacks/csv_logger/
+# Reduce -> https://keras.io/api/callbacks/reduce_lr_on_plateau/
+# EarlyStopping -> https://keras.io/api/callbacks/early_stopping/
 
 # Train
 
