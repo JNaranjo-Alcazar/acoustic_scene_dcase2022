@@ -17,8 +17,3 @@ def get_audio_sample_label(data,label_encoder,onehot_encoder):
 def get_audio_dir(audio_dir,annotations_file,index):
     path = os.path.join(audio_dir,annotations_file.iloc[index,0])
     return path
-
-#data = get_data()
-#label,onehot_encoded = get_audio_sample_label(data)
-#audio_dir = get_audio_dir(data)
-#print(audio_dir)
