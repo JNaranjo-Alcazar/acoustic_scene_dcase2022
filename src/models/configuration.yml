@@ -1,9 +1,9 @@
 type: 'baseline'
 framework: 'tensorflow' # ['tensorflow', 'torch']
-filters: [40, 40]
-kernel: 3
-pool: [(1, 10), (1, 10)]
+nfilters: [40, 40]
+kernel_size: 3
+pooling: [(1, 4), (1, 2)]
 dropout: [0.3, 0.3]
-global_pool: 'avg'
-spectrogram_dim: (64, 51, 1)
+top_flatten: 'avg'
+spectrogram_dim: 64, 51, 1
 verbose: True

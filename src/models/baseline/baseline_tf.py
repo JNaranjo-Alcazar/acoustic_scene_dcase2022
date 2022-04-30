@@ -16,7 +16,10 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
     kernel_size  = parameters['kernel_size']
     verbose = parameters['verbose']
 
-    inp = Input(shape=spectrogram_dim)
+    
+    spectogram_dim = tuple(map(int, spectrogram_dim.split(', ')))
+    print(type(spectogram_dim))
+    inp = Input(shape=(64,51,1))
 
     for i in range(0, len(filters)):
         if i == 0:
@@ -64,4 +67,3 @@ if __name__ == '__main__':
     }
 
     audio_model = construct_baseline_model(include_classification=True, **audio_network_settings)
-

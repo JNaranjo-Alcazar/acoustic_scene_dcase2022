@@ -21,13 +21,13 @@ opt = parser.parse_args()
 
 # Read yaml
 
-with open ("/app/acoustic_scene_dcase2022/src/models/configuration.yml") as f:
-    config = yaml.load(f,Loader=yaml.FullLoader)
+with open (opt.configuration_file) as f:
+    config = yaml.safe_load(f)
 
 
 # TODO: Create model
 
-if type == 'baseline':
+if config["type"] == 'baseline':
 
     model = construct_baseline_model(include_classification=True, **config)
 
