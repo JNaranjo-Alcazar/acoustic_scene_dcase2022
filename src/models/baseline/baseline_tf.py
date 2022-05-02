@@ -15,11 +15,8 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
     pooling = parameters['pooling']
     kernel_size  = parameters['kernel_size']
     verbose = parameters['verbose']
-
     
-    spectogram_dim = tuple(map(int, spectrogram_dim.split(', ')))
-    print(type(spectogram_dim))
-    inp = Input(shape=(64,51,1))
+    inp = Input(shape=spectrogram_dim)
 
     for i in range(0, len(filters)):
         if i == 0:
