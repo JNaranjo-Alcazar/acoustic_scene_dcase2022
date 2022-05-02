@@ -7,6 +7,7 @@ import argparse
 from baseline.baseline_tf import construct_baseline_model
 import tensorflow as tf
 
+import train_config
 
 parser = argparse.ArgumentParser()
 
@@ -14,22 +15,22 @@ parser.add_argument("--training_file", type=str, required=True,default="//app/ac
                     help="Path to h5 training file")
 parser.add_argument("--validation_file", type=str, required=True,default="/app/acoustic_scene_dcase2022/mels_validation.h5",
                     help="Path to h5 validation file")
-parser.add_argument("--configuration_file", type=str, required=True,default="/app/acoustic_scene_dcase2022/src/models/configuration.yml",
-                    help="Path to configuration file")
+# parser.add_argument("--configuration_file", type=str, required=True,default="/app/acoustic_scene_dcase2022/src/models/configuration.yml",
+#                     help="Path to configuration file")
 
 opt = parser.parse_args()
 
 # Read yaml
 
-with open (opt.configuration_file) as f:
-    config = yaml.safe_load(f)
+# with open (opt.configuration_file) as f:
+#     config = yaml.safe_load(f)
 
 
 # TODO: Create model
 
-if config["type"] == 'baseline':
+if train_config.network_type == 'baseline':
 
-    model = construct_baseline_model(include_classification=True, **config)
+    model = construct_baseline_model(include_classification=True, **train_config.audio_network_settings)
 
 # Read h5
 
@@ -53,10 +54,10 @@ print(f'Training labels shape: {validation_labels.shape}')
 # EarlyStopping -> https://keras.io/api/callbacks/early_stopping/
 
 model_callbacks=[
-    tf.keras.callbacks.EarlyStopping(patience=2),
-    tf.keras.callbacks.ModelCheckpoint(filepath=""),
-    tf.keras.callbacks.ReduceLROnPlateau(),
-    tf.keras.callbacks.CSVLogger("training.log")
+    tf.keras.callbacks.EarlyStopping(patience=30),
+    tf.keras.callbacks.ModelCheckpoint(filepath=f"/content/gdrive/{train_config.network_type}.h5"), # rellenar path
+    tf.keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=15),
+    tf.keras.callbacks.CSVLogger(f"/content/gdrive/training_{train_config.network_type}.log") # rellenar path
 ]
 
 # Train
