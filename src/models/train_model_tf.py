@@ -28,7 +28,7 @@ opt = parser.parse_args()
 
 # TODO: Create model
 
-if train_config.network_type == 'baseline':
+if train_config.network_type == 'squeeze_excitation':
 
     model = construct_baseline_model(include_classification=True, **train_config.audio_network_settings)
 

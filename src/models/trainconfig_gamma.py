@@ -1,4 +1,4 @@
-network_type =  'squeeze_excitation'
+network_type =  'baseline'
 framework = 'tensorflow' # ['tensorflow', 'torch']
 
 audio_network_settings = {
@@ -7,7 +7,6 @@ audio_network_settings = {
         'pooling': [(1, 4), (1, 2)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
-        'spectrogram_dim': (64, 51, 1),
+        'spectrogram_dim': (64, 49, 1),
         'verbose': True
     }
-    
