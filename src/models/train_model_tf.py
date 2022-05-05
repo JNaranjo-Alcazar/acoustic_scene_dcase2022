@@ -5,6 +5,7 @@ import yaml
 import h5py
 import argparse
 from baseline.baseline_tf import construct_baseline_model
+from squeeze_excitation.squeeze_exctitation_tf import construct_asc_network_csse
 import tensorflow as tf
 
 import train_config
@@ -28,9 +29,14 @@ opt = parser.parse_args()
 
 # TODO: Create model
 
-if train_config.network_type == 'squeeze_excitation':
+if train_config.network_type == 'baseline':
 
-    model = construct_baseline_model(include_classification=True, **train_config.audio_network_settings)
+    model = construct_baseline_model(include_classification=True, **train_config.audio_network_settings_baseline)
+
+elif train_config.network_type == 'squeeze_excitation':
+
+    model = construct_asc_network_csse(include_classification=True, **train_config.audio_network_settings_scse)
+
 
 # Read h5
 
