@@ -8,8 +8,6 @@ import h5py as f
 from tqdm import tqdm
 import pickle
 
-ANNOTATIONS_FILE = "/app/acoustic_scene_dcase2022/meta.csv"
-AUDIO_DIR = "/app/dcasedata"
 
 class DCASEDatasetTrain(Dataset):
 
@@ -32,10 +30,10 @@ class DCASEDatasetTrain(Dataset):
         label, onehot_encoded = get_audio_sample_label(self.scene[index],self.label_encoder,self.onehot_encoder)
         signal,sr = load_audio(audio_sample_path)
         signal = resample_if_necessary(signal,sr)
-        #gamma_spec = gammatone(signal)
-        leaf_spec = leaf_audio(signal)
+        gamma_spec = gammatone(signal)
+        #leaf_spec = leaf_audio(signal)
         #mel = mel_spectogram(signal)
-        return audio_sample_path,label,onehot_encoded,signal,sr,leaf_spec
+        return audio_sample_path,label,onehot_encoded,signal,sr,gamma_spec
 
 
 if __name__ == "__main__":
@@ -53,11 +51,11 @@ if __name__ == "__main__":
     onehot_encoder  = np.zeros((len(dset),10))
 
     for i in tqdm(range(len(dset))):
-        _,_,onehot_encoder[i],_,_,leaf_spec[i,:,:,:] = dset[i]
+        _,_,onehot_encoder[i],_,_,gamma_spec[i,:,:] = dset[i]
 
     #mel_expand=np.expand_dims(mel,axis=3)
-    leaf_spec_expand = np.moveaxis(leaf_spec,1,-1)
-    #gamma_spec_expand=np.expand_dims(gamma_spec,axis=3)
+    #leaf_spec_expand = np.moveaxis(leaf_spec,1,-1)
+    gamma_spec_expand=np.expand_dims(gamma_spec,axis=3)
 
     # hf = f.File("mels.h5","w")
     # hf.create_dataset("features",data=mel_expand)
@@ -72,14 +70,14 @@ if __name__ == "__main__":
     #     pickle.dump(dset.label_encoder, f_label)
     # f_label.close()
 
-    hf = f.File("leafs.h5","w")
-    hf.create_dataset("features",data=leaf_spec_expand)
-    hf.create_dataset("labels",data=onehot_encoder)
-    hf.close()
-
-    # hf = f.File("gammas.h5","w")
-    # hf.create_dataset("features",data=gamma_spec_expand)
+    # hf = f.File("leafs.h5","w")
+    # hf.create_dataset("features",data=leaf_spec_expand)
     # hf.create_dataset("labels",data=onehot_encoder)
     # hf.close()
+
+    hf = f.File("gammas.h5","w")
+    hf.create_dataset("features",data=gamma_spec_expand)
+    hf.create_dataset("labels",data=onehot_encoder)
+    hf.close()
 
 

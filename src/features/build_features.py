@@ -27,7 +27,7 @@ def pad_if_necessary(signal):
 
 def gammatone(signal):
     gammatone_spec = gtgram(signal,hp.audio.sr,hp.audio.win_len,hp.audio.hop_len,hp.audio.n_channels,hp.audio.fmin)
-    return gammatone_spec
+    return np.flipud(20*np.log10(gammatone_spec))
 
 def leaf_audio(signal):
     leaf = frontend.Leaf(n_filters=64,window_len =float(hp.audio.win_len*1000),
@@ -37,8 +37,9 @@ def leaf_audio(signal):
     return(leaf_representation)
 
 def mel_spectogram(signal):
-    return librosa.feature.melspectrogram(signal,hp.audio.sr,win_length=int(hp.audio.sr*hp.audio.win_len),
+    mel = librosa.feature.melspectrogram(signal,hp.audio.sr,win_length=int(hp.audio.sr*hp.audio.win_len),
                                           hop_length=int(hp.audio.sr*hp.audio.hop_len),n_mels=hp.audio.n_channels)
+    return librosa.power_to_db(mel)
 
 
 

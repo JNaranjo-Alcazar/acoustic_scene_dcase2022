@@ -74,7 +74,7 @@ if __name__ == "__main__":
     # hf.create_dataset("labels",data=onehot_encoder)
     # hf.close()
 
-    hf = f.File("gammas.h5","w")
+    hf = f.File("gammas_validation.h5","w")
     hf.create_dataset("features",data=gamma_spec_expand)
     hf.create_dataset("labels",data=onehot_encoder)
     hf.close()

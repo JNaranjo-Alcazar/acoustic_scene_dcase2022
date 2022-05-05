@@ -54,14 +54,14 @@ print(f'Training labels shape: {validation_labels.shape}')
 # EarlyStopping -> https://keras.io/api/callbacks/early_stopping/
 
 model_callbacks=[
-    tf.keras.callbacks.EarlyStopping(patience=30),
-    tf.keras.callbacks.ModelCheckpoint(filepath=f"/content/gdrive/{train_config.network_type}.h5"), # rellenar path
-    tf.keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=15),
-    tf.keras.callbacks.CSVLogger(f"/content/gdrive/training_{train_config.network_type}.log") # rellenar path
+    tf.keras.callbacks.EarlyStopping(patience=30,monitor='val_categorical_accuracy'),
+    tf.keras.callbacks.ModelCheckpoint(filepath=f"/content/drive/MyDrive/TFG/Notebooks/acoustic_scene_dcase2022{train_config.network_type}.h5",monitor='val_categorical_accuracy'), # rellenar path
+    tf.keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=15,monitor='val_categorical_accuracy'),
+    tf.keras.callbacks.CSVLogger(f"/content/drive/MyDrive/TFG/Notebooks/acoustic_scene_dcase2022/training_{train_config.network_type}.log") # rellenar path
 ]
 
 # Train
-
-model.fit(training_features, training_labels, validation_data=(validation_features, validation_labels), callbakcs=model_callbacks)
+model.compile("adam",loss="categorical_crossentropy",metrics=['categorical_accuracy'])
+model.fit(training_features, training_labels, epochs = 500,validation_data=(validation_features, validation_labels), callbacks=model_callbacks)
 
 # Finish training -> prints, logs, etc
