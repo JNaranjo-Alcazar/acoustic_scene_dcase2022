@@ -17,7 +17,7 @@ def activation_block(x):
 
 
 def conv_stem(x, filters: int, patch_size: int):
-    x = layers.Conv2D(filters, kernel_size=patch_size, strides=patch_size)(x)
+    x = layers.Conv2D(filters, kernel_size=patch_size, strides=patch_size, padding="same")(x)
     return activation_block(x)
 
 
@@ -56,6 +56,7 @@ def construct_convmixer_model(include_classification=True, nclasses=10, **parame
 
     # ConvMixer blocks.
     for i, nfilter in enumerate (filters):
+        x = conv_mixer_block(x, nfilter, kernel_size)
         x = conv_mixer_block(x, nfilter, kernel_size)
         x = layers.MaxPool2D(pool_size=pooling[i])(x)
         x = layers.Dropout(rate=dropout[i])(x)
