@@ -34,3 +34,17 @@ audio_network_settings_convmixer = {
         'spectrogram_dim': (64, 51, 1),
         'verbose': True
     }
+
+audio_network_settings_lambda = {
+        'kernel_size': 3,
+        'nfilters': (40, 40),
+        'pooling': [(1, 4), (1, 2)],
+        'dropout': [0.3, 0.3],
+        'top_flatten': 'avg',
+        'spectrogram_dim': (64, 51, 1),
+        'receptive_field': 23,
+        'key_dimension':16,
+        'heads': 8,
+        'intra_depth': 1,
+        'verbose': True
+    }
