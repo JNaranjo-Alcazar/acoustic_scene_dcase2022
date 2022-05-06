@@ -7,6 +7,7 @@ import argparse
 from baseline.baseline_tf import construct_baseline_model
 from squeeze_excitation.squeeze_exctitation_tf import construct_asc_network_csse
 from conv_mixer.conv_mixer_tf import construct_convmixer_model
+from aug_conv.aug_conv_tf import construct_aug_conv_model
 import tensorflow as tf
 
 import train_config
@@ -40,7 +41,12 @@ elif train_config.network_type == 'squeeze_excitation':
 
 elif train_config.network_type == 'conv_mixer':
 
-    model = construct_asc_network_csse(include_classification=True, **train_config.audio_network_settings_convmixer)
+    model = construct_convmixer_model(include_classification=True, **train_config.audio_network_settings_convmixer)
+
+elif train_config.network_type == 'aug_conv':
+
+    model = construct_aug_conv_model(include_classification=True, **train_config.audio_network_settings_baseline)
+
 
 
 # Read h5
