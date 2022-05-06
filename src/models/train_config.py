@@ -23,3 +23,14 @@ audio_network_settings_scse = {
         'merge_type': 'sum',  #['max']
         'verbose': True
 }
+
+audio_network_settings_convmixer = {
+        'kernel_size': 3,
+        'nfilters': (40, 40),
+        'pooling': [(1, 10), (1, 10)],
+        'dropout': [0.3, 0.3],
+        'top_flatten': 'avg',
+        'patch_size': 2,
+        'spectrogram_dim': (64, 500, 3),
+        'verbose': True
+    }
