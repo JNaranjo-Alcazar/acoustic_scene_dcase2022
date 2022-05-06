@@ -52,6 +52,7 @@ elif train_config.network_type == 'lambda':
 
     model = construct_lambda_network(include_classification=True, **train_config.audio_network_settings_lambda)
 
+# TODO: ghostnet, mlp_mixer and transformer
 
 
 
