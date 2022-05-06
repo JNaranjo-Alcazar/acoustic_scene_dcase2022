@@ -26,11 +26,11 @@ audio_network_settings_scse = {
 
 audio_network_settings_convmixer = {
         'kernel_size': 3,
-        'nfilters': (40, 40),
-        'pooling': [(1, 4), (1, 2)],
-        'dropout': [0.3, 0.3],
+        'nfilters': (32, 64, 128, 256),
+        'pooling': [(1, 2), (1, 2), (1, 2), (1, 1)],
+        'dropout': [0.3, 0.3, 0.3, 0.3],
         'top_flatten': 'avg',
-        'patch_size': 2,
+        'patch_size': 3,
         'spectrogram_dim': (64, 51, 1),
         'verbose': True
     }
