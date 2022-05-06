@@ -8,7 +8,7 @@ from baseline.baseline_tf import construct_baseline_model
 from squeeze_excitation.squeeze_exctitation_tf import construct_asc_network_csse
 from conv_mixer.conv_mixer_tf import construct_convmixer_model
 from aug_conv.aug_conv_tf import construct_aug_conv_model
-from lambda_networks.lambda_tf import construct_lambda_network
+from lambda_model.lambda_tf import construct_lambda_network
 import tensorflow as tf
 
 import train_config
