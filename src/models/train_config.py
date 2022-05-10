@@ -48,13 +48,3 @@ audio_network_settings_lambda = {
         'intra_depth': 1,
         'verbose': True
     }
-
-audio_network_settings_augconv = {
-        'kernel_size': 3,
-        'nfilters': (40, 40),
-        'pooling': [(1, 4), (1, 2)],
-        'dropout': [0.3, 0.3],
-        'top_flatten': 'avg',
-        'spectrogram_dim': (64, 51, 1),
-        'verbose': True
-    }
