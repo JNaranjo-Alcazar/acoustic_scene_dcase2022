@@ -21,9 +21,9 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
 
     for i in range(0, len(filters)):
         if i == 0:
-            x = SeparableConv2D(filters[i], kernel_size, padding='same')(inp)
+            x = Conv2D(filters[i], kernel_size, padding='same')(inp)
         else:
-            x = SeparableConv2D(filters[i], kernel_size, padding='same')(x)
+            x = Conv2D(filters[i], kernel_size, padding='same')(x)
         
         x = BatchNormalization()(x)
         x = ELU()(x)
