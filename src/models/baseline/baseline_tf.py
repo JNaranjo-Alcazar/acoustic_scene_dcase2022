@@ -3,7 +3,8 @@ Baseline network
 '''
 
 from tensorflow.keras.layers import (Conv2D, MaxPool2D, Dropout, Input, BatchNormalization,
-                                    GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU)
+                                    GlobalAveragePooling2D, GlobalMaxPooling2D, Dense, ELU,
+                                    SeparableConv2D)
 from tensorflow.keras.models import Model
 
 def construct_baseline_model(include_classification=True, nclasses=10, **parameters):
@@ -27,11 +28,9 @@ def construct_baseline_model(include_classification=True, nclasses=10, **paramet
         x = BatchNormalization()(x)
         x = ELU()(x)
  
-        if i!=0:
-
-            x = Conv2D(filters[i], kernel_size, padding='same')(x)
-            x = BatchNormalization()(x)
-            x = ELU()(x)
+        x = SeparableConv2D(filters[i], kernel_size, padding='same')(x)
+        x = BatchNormalization()(x)
+        x = ELU()(x)
 
         x = MaxPool2D(pool_size=pooling[i])(x)
         x = Dropout(rate=dropout[i])(x)
