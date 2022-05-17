@@ -1,12 +1,18 @@
+from fileinput import filename
 import pandas as pd
 import os
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
   
-def get_data(annotations_file):
-    csv = pd.read_csv(annotations_file,sep="\t")
-    scene = csv['scene_label'].tolist()
-    return csv,scene
+def get_data(annotations_file,test):
+    if test !=True:
+        csv = pd.read_csv(annotations_file,sep="\t")
+        scene = csv['scene_label'].tolist()
+        return scene,csv
+    else:
+        csv = pd.read_csv(annotations_file,sep="\t")
+        filename = csv['filename'].tolist()
+        return csv,filename
 
 def get_audio_sample_label(data,label_encoder,onehot_encoder):
     label = label_encoder.transform([data]) #label list

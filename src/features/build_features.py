@@ -1,4 +1,5 @@
 
+from statistics import mode
 import numpy as np
 import sys
 sys.path.append("/app/acoustic_scene_dcase2022/src/gammatone")
@@ -41,7 +42,9 @@ def mel_spectogram(signal):
                                           hop_length=int(hp.audio.sr*hp.audio.hop_len),n_mels=hp.audio.n_channels)
     return librosa.power_to_db(mel)
 
-
+def load(model):
+    model = tf.keras.models.load_model(model)
+    return model
 
 #audio,sr = load_audio(audio_file)
 #print(np.shape(audio))
