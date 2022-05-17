@@ -42,9 +42,14 @@ def mel_spectogram(signal):
                                           hop_length=int(hp.audio.sr*hp.audio.hop_len),n_mels=hp.audio.n_channels)
     return librosa.power_to_db(mel)
 
-def load(model):
-    model = tf.keras.models.load_model(model)
-    return model
+def load(model,tflite):
+    if tflite != True:
+        model = tf.keras.models.load_model(model)
+        return model
+    else:
+        interpreter = tf.lite.Interpreter(model_path=model)
+        interpreter.allocate_tensors()
+        return interpreter
 
 #audio,sr = load_audio(audio_file)
 #print(np.shape(audio))

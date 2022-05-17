@@ -12,7 +12,7 @@ class DCASEDatasetValidation(Dataset):
     def __init__(self,annotations_file,audio_dir,model):
         self.annotations,self.filename = get_data(annotations_file,test=True)
         self.audio_dir = audio_dir
-        self.model = load(model)
+        self.model = load(model,tflite=False)
     
     def __len__(self):
         return len(self.annotations)
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         street_traffic[i]=prediction[0,8]
         tram[i]=prediction[0,9]
     
-    for i in range(len(file_name)):
+    for i in tqdm(range(len(file_name))):
         file_name[i] = file_name[i].split("/")[1]
         
 df = pd.DataFrame(list(zip(file_name,scene_label,airport,bus,metro,metro_station,park,
