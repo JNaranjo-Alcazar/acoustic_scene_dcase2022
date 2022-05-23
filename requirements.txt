@@ -24,3 +24,6 @@ pandas
 PyYAML
 # backwards compatibility
 # pathlib2
+#git+https://github.com/fastai/fastai.git
+#pip install -e "fastai[dev]"
+fastaudio
