@@ -93,3 +93,5 @@ Dockerfile_cpu
 
 # torch trainings
 lightning_logs/
+
+src/models/baseline/baseline.png

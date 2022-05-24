@@ -7,6 +7,12 @@ from tensorflow.keras.layers import (Conv2D, MaxPool2D, Dropout, Input, BatchNor
                                     SeparableConv2D)
 from tensorflow.keras.models import Model
 
+#import visualkeras
+
+#from PIL import ImageFont
+
+#from collections import defaultdict
+
 def construct_baseline_model(include_classification=True, nclasses=10, **parameters):
 
     spectrogram_dim = parameters['spectrogram_dim']
@@ -57,11 +63,25 @@ if __name__ == '__main__':
     audio_network_settings = {
         'kernel_size': 3,
         'nfilters': (40, 40),
-        'pooling': [(1, 10), (1, 10)],
+        'pooling': [(4, 1), (2, 1)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
-        'spectrogram_dim': (64, 500, 1),
+        'spectrogram_dim': (64, 51, 1),
         'verbose': True
     }
 
     audio_model = construct_baseline_model(include_classification=True, **audio_network_settings)
+
+    #font = ImageFont.truetype("arial.ttf", 15)
+
+    #color_map = defaultdict(dict)
+    #color_map[Conv2D]['fill'] = 'pink'
+    #color_map[BatchNormalization]['fill'] = 'purple'
+    #color_map[ELU]['fill'] = 'yellow'
+    #color_map[MaxPool2D]['fill'] = 'teal'
+    #color_map[Dropout]['fill'] = 'royalblue'
+    #color_map[SeparableConv2D]['fill'] = 'navy'
+    #color_map[GlobalAveragePooling2D]['fill'] = 'brown'
+    #color_map[Dense]['fill'] = 'gray'
+
+    #visualkeras.layered_view(audio_model, to_file='baseline.png', color_map=color_map, spacing=20, legend=True, font=font)  # font is optional!
