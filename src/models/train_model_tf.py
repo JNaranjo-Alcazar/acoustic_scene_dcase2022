@@ -9,6 +9,7 @@ from squeeze_excitation.squeeze_exctitation_tf import construct_asc_network_csse
 from conv_mixer.conv_mixer_tf import construct_convmixer_model
 from aug_conv.aug_conv_tf import construct_aug_conv_model
 from lambda_model.lambda_tf import construct_lambda_network
+from ghosnets.ghosnet_tf import ConstructGhosnetModule 
 import tensorflow as tf
 
 import train_config
@@ -51,6 +52,11 @@ elif train_config.network_type == 'aug_conv':
 elif train_config.network_type == 'lambda':
 
     model = construct_lambda_network(include_classification=True, **train_config.audio_network_settings_lambda)
+    
+elif train_config.network_type == 'ghost':
+    
+    constructor = ConstructGhosnetModule(nclasses=10)
+    model = constructor.build(**train_config.audio_network_settings_ghostnet)
 
 # TODO: ghostnet, mlp_mixer and transformer
 
