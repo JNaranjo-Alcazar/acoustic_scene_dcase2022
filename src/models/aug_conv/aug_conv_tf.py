@@ -356,11 +356,11 @@ if __name__ == '__main__':
 
     audio_network_settings = {
         'kernel_size': 3,
-        'nfilters': (40, 40),
-        'pooling': [(1, 10), (1, 10)],
+        'nfilters': (48, 48),
+        'pooling': [(1, 4), (1, 2)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
-        'spectrogram_dim': (64, 500, 3),
+        'spectrogram_dim': (64, 50, 1),
         'verbose': True
     }
 

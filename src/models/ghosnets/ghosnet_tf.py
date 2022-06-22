@@ -33,12 +33,12 @@ class ConstructGhosnetModule(GhostModule):
                     x = self._ghost_bottleneck(inp, filters[i], kernel_size, self.dw_kernel, 16, 1, self.ratio, False)
                 else:
                     # _ghost_module(self, inputs, exp, kernel, dw_kernel, ratio, s=1, padding='SAME',use_bias=False, data_format='channels_last', activation=None):
-                    x = self._ghost_module(inp, 16, kernel_size, self.dw_kernel, self.ratio)
+                    x = self._ghost_module(inp, filters[i], kernel_size, self.dw_kernel, self.ratio)
             else:
                 if bottleneck:
                     x = self._ghost_bottleneck(x, filters[i], kernel_size, self.dw_kernel, 16, 1, self.ratio, False)
                 else:
-                    x = self._ghost_module(x, 16, kernel_size, self.dw_kernel,  self.ratio)
+                    x = self._ghost_module(x, filters[i], kernel_size, self.dw_kernel,  self.ratio)
             
             x = BatchNormalization()(x)
             x = ELU()(x)
@@ -65,11 +65,11 @@ if __name__ == '__main__':
 
     audio_network_settings = {
         'kernel_size': 3,
-        'nfilters': (40, 40),
-        'pooling': [(1, 10), (1, 10)],
+        'nfilters': (48, 48),
+        'pooling': [(1, 4), (1, 2)],
         'dropout': [0.3, 0.3],
         'top_flatten': 'avg',
-        'spectrogram_dim': (64, 500, 3),
+        'spectrogram_dim': (64, 50, 1),
         'bottleneck': False,
         'verbose': True
     }
